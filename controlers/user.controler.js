@@ -1,28 +1,27 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const key = require("../configs/token.config");
 
 async function loginUser(req, res) {
     if (req.body) {
-        const mail = req.body.mail;
+        const email = req.body.email;
         const pass = req.body.password;
-        if (mail && pass) {
+        if (email && pass) {
             try {
-                const info = await user.findOne({"mail": mail, "password": pass});
+                let info = await user.findOne({"email": email, "password": pass});
                 if (!info) {
-                    res.status(404).json({message: "User not found"});
+                    return res.status(404).json({message: "User not found"});
                 } else {
-                    const token = jwt.sign({userId:user.id}, key.tokenKey);
-                    info.token = token;
-                    res.status(200).json(info);
+                    info.token = jwt.sign({userId:user.id}, key.tokenKey, {expiresIn: "2h"});
+                    return res.status(200).json(info);
                 }
             } catch (err) {
-                res.status(204).json(err);
+                return res.status(204).json(err);
             }
         } else {
-            res.status(403).json({message: "not valid mail or password"});
+            return res.status(403).json({message: "Not valid email or password"});
         }
     } else {
-        res.status(202).json({message: "Empty data!"})
+        return res.status(202).json({message: "Empty data!"})
     }
 }
 

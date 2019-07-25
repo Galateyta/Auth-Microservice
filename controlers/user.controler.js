@@ -11,7 +11,10 @@ async function loginUser(req, res) {
                 if (!info) {
                     return res.status(404).json({message: "User not found"});
                 } else {
-                    info.token = jwt.sign({userId:user.id}, key.tokenKey, {expiresIn: "2h"});
+                    info.token = jwt.sign({userId: user.id}, key.tokenKey, {expiresIn: "2h"});
+                    do {
+                        var data = await user.updateOne({_id: info._id}, {$set: {token: info.token}});
+                    } while (data);
                     return res.status(200).json(info);
                 }
             } catch (err) {

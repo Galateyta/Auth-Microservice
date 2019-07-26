@@ -9,7 +9,8 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 app.use(bodyParser.json());
-app.use('/signup', users )
+app.use('/', users )
 app.listen(8080);
 mongoose.connect('mongodb://' + process.env.DB_HOST + ':' + process.env.DB_PORT + '/'+ process.env.DB_NAME , {useNewUrlParser: true});
+
 module.exports = app;

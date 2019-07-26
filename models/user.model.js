@@ -6,25 +6,11 @@ mongoose.set('useCreateIndex', true);
 
 const User = mongoose.model('user', new mongoose.Schema({
     id: {
-        type: Number
+        type: String
     },
     name: {
         type: String,
         required: true
-    },
-    surname: {
-        type: String,
-        required: true
-    },
-    age: {
-        type: Number,
-        min: [7, 'Too small age'],
-        max: [50, 'Too big age'],
-        required: true
-    },
-    gender: {
-        type: String,
-        enum: ['male', 'female']
     },
     email: {
         type: String,
@@ -34,11 +20,16 @@ const User = mongoose.model('user', new mongoose.Schema({
         type: String,
         required: true
     },
-    role: {
-        type: String,
-        enum: ['user', 'admin']
+    isVerified: {   
+        type: Boolean, 
+        default: false 
     },
-    isVerified: { type: Boolean, default: false },
+    token: {
+        type: String
+    },
+    confirmToken: {
+        type: String,
+    }
 }));
 
 module.exports = User;

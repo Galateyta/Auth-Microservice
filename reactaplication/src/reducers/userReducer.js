@@ -1,17 +1,20 @@
 import * as actionTypes from '../actions/actionTypes';
-const initialState={};
+const initialState = {};
+
 export default (state = {}, action) => {
-    switch (action.type){
-      case actionTypes.LOGIN_USER:
+  switch (action.type) {
+    case actionTypes.LOGIN_USER:
       return {
         ...state,
         ...action.data
       };
-      case actionTypes.LOGOUT_USER:
+
+    case actionTypes.LOGOUT_USER:
       return {
         ...initialState
       };
-      default:
-            return state;
-    }
-  };
+
+    default:
+      return state;
+  }
+};

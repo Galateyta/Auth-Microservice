@@ -34,25 +34,23 @@ async function changePassword(req, res) {
         const pass = req.body.password;
         const newPass = req.body.newPassword;
         const token = req.body.token;
+
         if (email && pass && newPass) {
             try {
                 const info = await user.findOne({"email": email, "password": pass});
                 if (!info) {
                     return res.status(404).json({message: "User not found"});
                 } else {
-                    if (token === info.token) {
-                        do {
-                            const data = await user.updateOne({_id: info._id}, {"password": pass});
-                        } while (!data);
+                    if (token == info.token) {
+                        const data = await user.updateOne({"email": email}, {"password": newPass});
                         return res.status(200).json({
                             message: "Successfully changed password"
                         });
                     } else {
-                            res.status(302).json({
+                            return res.status(302).json({
                                 message: "Cant Do this"
                             });
                     }
-                    return res.status(200).json(info);
                 }
             } catch (err) {
                 return res.status(204).json(err);

@@ -9,5 +9,7 @@ router.route('/signup/confirmation/:token')
 router.route('/signin')
     .post(controller.loginUser);
 router.route('/change')
-    .post(controller.changePassword)
+    .post(controller.changePassword);
+router.route('/resetpass')
+    .post(controller.resetPassword)
 module.exports = router;

@@ -12,7 +12,34 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-let changePassword = async function changePassword(req, res) {
+let resetPassword = async function(req, res) {
+    const url = 'http://localhost:3000';
+    if (!req.body) return res.sendStatus(400);
+    const email = req.body.email;
+    const newPass = uuidv4();
+    const cryptPass = bcrypt.hashSync(newPass, 10);
+    let mailOptions = {
+        from: 'authorisation.app@gmail.com',
+        to: email,
+        subject: 'Forgot password',
+        html: `Your new password is:${newPass}<br>  Please click this to login with your new password: <a href="${url}">${url}</a>`,
+    };
+    try {
+        await transporter.sendMail(mailOptions);
+        const info = await User.findOne({ "email": email });
+        if (!info) {
+            return res.status(404).json({ message: "User not found" });
+        } else  {
+            const data = await User.updateOne({ "email": info.email }, { "password": cryptPass });
+            return res.status(200).json({
+                message: "Successfully reseted password"
+            });
+        } 
+    } catch (error) {
+        return res.status(204).json(error);
+    }
+}
+let changePassword = async function (req, res) {
     if (req.body) {
         const email = req.body.email;
         const password = req.body.password;
@@ -33,7 +60,6 @@ let changePassword = async function changePassword(req, res) {
                         message: "Cant Do this"
                     });
                 }
-
             } catch (err) {
                 return res.status(204).json(err);
             }
@@ -53,19 +79,18 @@ let loginUser = async function (req, res) {
                 const info = await User.findOne({
                     "email": email
                 });
+
                 if (!info) {
                     return res.status(404).json({
                         message: "User not found"
                     });
                 } else {
                     if (bcrypt.compareSync(password, info.password)) {
-                        console.log(password);
                         const token = jwt.sign({ userId: info._id }, key.tokenKey, { expiresIn: "2h" });
                         try {
                             const user = await User.updateOne({ _id: info._id }, {
                                 $set: { token: token }
                             })
-                            console.log('newUser', info);
                             res.status(200).json(info);
                         } catch (error) {
                             return res.status(400).json(error);
@@ -74,7 +99,6 @@ let loginUser = async function (req, res) {
                     }
                 }
             } catch (err) {
-                console.log(err);
                 return res.status(204).json(err);
             }
         } else {
@@ -136,14 +160,14 @@ let userPostFunction = async function (req, res) {
     mailOptions.to = req.body.email;
     try {
         await transporter.sendMail(mailOptions);
-        console.log(user);
     } catch (error) {
         console.log(error);
     }
-    console.log(user)
 }
 module.exports.userPostFunction = userPostFunction;
 module.exports.emailConfirmation = emailConfirmation;
 module.exports.loginUser = loginUser;
 module.exports.changePassword = changePassword;
+module.exports.resetPassword = resetPassword;
+
 

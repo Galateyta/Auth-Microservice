@@ -9,7 +9,6 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
             password: ''
         };
         this.handleChange = this.handleChange.bind(this);
@@ -19,16 +18,14 @@ class Login extends Component {
     handleChange(e) {
         if (e.target.id === 'email') {
             this.setState({ email: e.target.value });
-        } else if (e.target.id === 'password') {
-            this.setState({ password: e.target.value });
-        }
+        };
     }
 
     handleSubmit(e) {
         e.preventDefault();
         const user  = this.state;
 
-        fetch('http://172.20.24.9:8080/resetpass', {
+        fetch('http://localhost:8080/resetpass', {
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -37,18 +34,11 @@ class Login extends Component {
               body:  JSON.stringify( user)
             })
             .then(res =>{
-               // TO DO redirect to login
-
+                this.props.history.push('/');
             })
             .catch(error=>{
-                
-                alert(`Password or Username is false`);
-                
+                alert(`Email is not valid`);
             })
-
-
-
-
     }
 
 

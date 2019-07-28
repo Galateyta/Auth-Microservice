@@ -48,7 +48,7 @@ class Registry extends Component {
             "gender":this.state.gender
         }
         
-    fetch('http://172.20.24.9:8080/signup', {
+    fetch('http://localhost:8080/signup', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -56,8 +56,6 @@ class Registry extends Component {
                 },
                 body:  JSON.stringify( curentUser)
                 }).then((res) =>  this.props.history.push('/'))
-    
-
         }
 
     render() {

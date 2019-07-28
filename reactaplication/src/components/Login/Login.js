@@ -29,7 +29,7 @@ class Login extends Component {
         e.preventDefault();
         const user  = this.state;
         try {
-            const result = await fetch('http://172.20.24.9:8080/signin', {
+            const result = await fetch('http://localhost:8080/signin', {
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -45,7 +45,6 @@ class Login extends Component {
                     alert('User is not validate. Please validate your account');
                 }else{
                     alert('Email or password is not correct');
-
                 }
         } catch (error) {
             console.log(error);

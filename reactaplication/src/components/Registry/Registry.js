@@ -61,7 +61,6 @@ class Registry extends Component {
     render() {
         return (
             <div className={style.App} >
-
                 <Form className={style.form} onSubmit={this.handleSubmit}>
                     <Container>
                         <Row>
@@ -69,7 +68,6 @@ class Registry extends Component {
                                 <h2>Sing up</h2>
                             </Col>
                             <Col md="12">
-
                                 <Input
                                     type="text"
                                     name="name"
@@ -78,10 +76,8 @@ class Registry extends Component {
                                     onChange={this.handleChange}
                                     required
                                 />
-
                             </Col>
                             <Col md="12">
-
                                 <Input
                                     type="text"
                                     name="surname"
@@ -90,10 +86,8 @@ class Registry extends Component {
                                     onChange={this.handleChange}
                                     required
                                 />
-
                             </Col>
                              <Col md="12">
-
                                 <Input
                                     type="number"
                                     name="age"
@@ -103,9 +97,7 @@ class Registry extends Component {
                                     required
                                 />
                             </Col>
-
                             <Col md="12">
-
                                 <Input
                                     type="email"
                                     name="email"
@@ -114,37 +106,31 @@ class Registry extends Component {
                                     onChange={this.handleChange}
                                     required
                                 />
-
                             </Col>
                             <Col md="12">
-                            <Col md="12">
-                            
-                            <Input
-                                type="radio"
-                                name="gender"
-                                id="gender"
-                                value = "male"
-                                onChange={this.handleChange}
-                                required
-                            />
-                            male
+                                <Col md="12">
+                                    <Input
+                                        type="radio"
+                                        name="gender"
+                                        id="gender"
+                                        value = "male"
+                                        onChange={this.handleChange}
+                                        required
+                                    />
+                                    male
+                                </Col>
+                                <Col md="12">
+                                    <Input
+                                        type="radio"
+                                        name="gender"
+                                        id="gender"
+                                        value = "female"
+                                        onChange={this.handleChange}
+                                        required
+                                    />
+                                    female
+                                </Col>
                             </Col>
-                            <Col md="12">
-                            
-                            <Input
-                                type="radio"
-                                name="gender"
-                                id="gender"
-                                value = "female"
-                                onChange={this.handleChange}
-                                required
-                            />
-                            female
-                            </Col>
-                            
-
-                            </Col>
-
                             <Col md="12">
                                 <Input
                                     type="password"
@@ -155,21 +141,15 @@ class Registry extends Component {
                                     required
                                 />
                             </Col>                           
-
                             <Col >
                                 <Button className={style.signUpButton} onSubmit={this.handleSubmit}>Sign up</Button>
                             </Col>
                         </Row>
                     </Container>
                 </Form>
-
             </div>
-
         );
     }
-
-
-
 }
 
 export default Registry;

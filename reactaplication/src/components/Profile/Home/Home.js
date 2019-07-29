@@ -30,9 +30,7 @@ class Home extends Component {
 logOut = () => {
     this.props.delUser(this.props.user);
     localStorage.setItem('token', '');
-    console.log(this.props.user);
     this.props.history.push('/');
-
 
     }
 

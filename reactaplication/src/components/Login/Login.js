@@ -38,16 +38,15 @@ class Login extends Component {
               body: JSON.stringify( user)
             });
             const content = await result.json();
-                 if(content.isVerified){
-                    localStorage.token = content.token;
-                    this.props.history.push('/home');
-                }else if (!content.isVerified){
-                    alert('User is not validate. Please validate your account');
-                }else{
-                    alert('Email or password is not correct');
-                }
+            if(200 === content.status){
+                localStorage.token = content.token;
+                this.props.history.push('/home');
+
+            }else{
+                alert(content.message);
+            }
+                
         } catch (error) {
-            console.log(error);
             alert(`Password or Username is false`);
         }
         
@@ -56,7 +55,6 @@ class Login extends Component {
     render() {
         return (
             <div className={style.App} >
-
                 <Form className={style.form} onSubmit={this.handleSubmit}>
                     <Container>
                         <Row>
@@ -64,7 +62,6 @@ class Login extends Component {
                                 <h2>Sign In</h2>
                             </Col>
                             <Col >
-
                                 <Input
                                     type="email"
                                     name="email"
@@ -73,7 +70,6 @@ class Login extends Component {
                                     onChange={this.handleChange}
                                     required
                                 />
-
                             </Col>
                             <Col md="12">
                                 <Input
@@ -93,8 +89,7 @@ class Login extends Component {
                         <Row>
                             <Col  >
                                 <Button className={style.signInButton} onSubmit={this.onSubmit}>Sign in </Button>
-                                <Link to="/registry" className="comp-class"><Button className={style.signUpButton}>Sign up</Button></Link>
-                                
+                                <Link to="/registry" className="comp-class"><Button className={style.signUpButton}>Sign up</Button></Link>                         
                             </Col>
                             <Col>
                                 <Link to="/reset" className="comp-class"><Button >Forgot password</Button></Link>

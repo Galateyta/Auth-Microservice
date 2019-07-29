@@ -41,20 +41,16 @@ class Login extends Component {
             })
     }
 
-
-
     render() {
         return (
             <div className={style.App} >
-
                 <Form className={style.form} onSubmit={this.handleSubmit}>
                     <Container>
                         <Row>
-                            <Col >
+                            <Col>
                                 <h2>Forgot password</h2>
                             </Col>
-                            <Col >
-
+                            <Col>
                                 <Input
                                     type="email"
                                     name="email"
@@ -63,19 +59,14 @@ class Login extends Component {
                                     onChange={this.handleChange}
                                     required
                                 />
-
-                            </Col>
-                                                
-                            <Col  >
+                            </Col>                          
+                            <Col>
                                 <Button className={style.reset} onSubmit={this.onSubmit}>Reset</Button>                                
-                            </Col>
-                           
+                            </Col>    
                         </Row>
                     </Container>
                 </Form>
-
             </div>
-
         );
     }    
 }

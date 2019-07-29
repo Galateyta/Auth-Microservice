@@ -19,7 +19,6 @@ class Home extends Component {
         this.state = {
             newPassword: '',
             password: '',
-            email:''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,7 +28,6 @@ class Home extends Component {
     logOut = () => {
         this.props.delUser(this.props.user);
         localStorage.setItem('isLogin', false);
-        console.log(this.props.user);
         this.props.history.push('/');
 
 
@@ -37,19 +35,15 @@ class Home extends Component {
     handleChange(e) {
         if (e.target.id === 'newPassword') {
             this.setState({ newPassword: e.target.value });
-        } else if (e.target.id === 'password') {
+        } else  {
             this.setState({ password: e.target.value });
-        }else{
-            this.setState({ email: e.target.value });
-
         }
     }
 
     handleSubmit(e) {
         e.preventDefault();
         const user  = this.state;
-        console.log('local',localStorage.getItem('token'))
-        fetch('http://172.20.24.9:8080/change', {
+        fetch('http://localhost:8080/change', {
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -59,9 +53,8 @@ class Home extends Component {
               body:  JSON.stringify( user)
             })
             .then(res =>{
-                console.log(res);
                 if(404 === res.status){
-                    alert('Email or password not true')
+                    alert('User not found ')
 
                 }else if(!res.sucsses){
                     this.props.history.push('/home')
@@ -69,20 +62,15 @@ class Home extends Component {
                 }else{
                     alert('User is not validate. Please validate your account')
                 }
-
             })
             .catch(error=>{
-                
-                alert(`Password or Username is false`);
-                
+                alert(`Password  is false`);     
             })
-
     }
 
     render() {
         return (
             <div className={style.App} >
-
             <Form className={style.form} onSubmit={this.handleSubmit}>
                 <Container>
                     <Row>
@@ -90,7 +78,6 @@ class Home extends Component {
                             <h2>Change password</h2>
                         </Col>
                         <Col >
-
                             <Input
                                 type="text"
                                 name="password"
@@ -99,19 +86,6 @@ class Home extends Component {
                                 onChange={this.handleChange}
                                 required
                             />
-
-                        </Col>
-                        <Col >
-
-                            <Input
-                                type="text"
-                                name="email"
-                                id="email"
-                                placeholder="email"
-                                onChange={this.handleChange}
-                                required
-                            />
-
                         </Col>
                         <Col md="12">
                             <Input
@@ -123,8 +97,7 @@ class Home extends Component {
                                 required
                             />
                         </Col>
-                    </Row>
-                   
+                    </Row>       
                     <Row>
                         <Col  >
                             <Button className={style.signInButton} onSubmit={this.onSubmit}>Change </Button>
@@ -132,12 +105,9 @@ class Home extends Component {
                     </Row>
                 </Container>
             </Form>
-
         </div>
-
         );
     }
-
 }
 
 const mapDispatchToProps = (dispatch) => {

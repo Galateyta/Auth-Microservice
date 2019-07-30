@@ -38,7 +38,7 @@ class Login extends Component {
               body: JSON.stringify( user)
             });
             const content = await result.json();
-            if(200 === content.status){
+            if(200 === result.status){
                 localStorage.token = content.token;
                 this.props.history.push('/home');
 
